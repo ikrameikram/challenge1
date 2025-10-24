@@ -1,33 +1,37 @@
-
-
-
 <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 
-/*Route::get('/', function () {
-    return 'Bonjour Laravel';
-});*/
-
-Route::get('/ninjas',function(){
-    return view('ninjas');
+Route::get('/home', function () { // étape 2 : Créer une route simple
+    return 'Bonjour Laravel';// affiche bonjour laravel
 });
-/*Route::get('/', function () {
+
+//php artisan make:view acceuil
+Route::get('/', function () { //Étape 4 : Router la vue
     return view ('accueil');
 });
 
-php artisan make:controller TestController
+//Étape 7 : Router la méthode index du controlleur 
+Route::get('/', [TestController::class, 'index']);
 
-Route::get('/', function () {
-    return view ('accueil');
+//Étape 9 : Routes nommées
+Route::get('/home', [TestController::class, 'show']); // affiche acceuil
+
+//Étape 10 : Paramètres de route optionnels
+Route::get('/home/{name?}', function (?string $name = null) {
+    return 'Bonjour '.($name ?? 'Ikory');
 });
 
+//Étape 11 : Méthode greet avec paramètre
+Route::get('/salutations/{prenom?}', [TestController::class, 'greet']); 
 
+//Étape 12 : Route avec plusieurs paramètres
+//Étape 14 : Contraintes de route (done avec int)
+Route::get('/profile/{id?}/{age?}', function (?int $id = null, ?int $age = null) {
+    return 'Utilisateur ' . ($id ?? 'inconnu') . ' a ' . ($age ?? 'on ne connais pas combien de ') . ' ans.';
+});
 
-//Route::get('/', [TestController::class, 'index']);
-//Route::get('/accueil', [TestController::class, 'show']);
-//Route::get('/accueil', [TestController::class, 'show'])->name('home');
-//Route::get('/chemin/{param}', [MonController::class, 'maMethode']);
-Route::get('/TestController/{prenom}', [TestController::class, 'greet'])->name('TestController');
-*/
+//Étape 13 : Afficher un article
+Route::get('/article/{id?}',[TestController::class,'showArticle']);
+
